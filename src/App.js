@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import './App.css';
 import TweetBox from './TweetBox';
 import Feed from './Feed';
+import axios from 'axios'
 
 class App extends Component {
   constructor(props){
@@ -11,11 +12,9 @@ class App extends Component {
       error: null,
       isLoaded: true
     }
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  componentDidMount() {
+/*    componentDidMount() {
     fetch("https://still-garden-88285.herokuapp.com/draft_tweets")
       .then(res => res.json())
       .then(
@@ -32,6 +31,24 @@ class App extends Component {
           })
         }
       )
+  } */
+  //Aquí hacemos el GET con AXIOS
+   componentDidMount(){
+    axios.get('https://still-garden-88285.herokuapp.com/draft_tweets')
+    .then(
+      (result) => {
+        this.setState({
+          isLoaded: true,
+          tweets: result.data.draft_tweets
+        })       
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error: error
+        })
+      }
+    )
   }
 
   handleSubmit(newText) {
@@ -52,8 +69,8 @@ class App extends Component {
 
     // Dynamic UI !
     let newTweet = {
-      user_name: 'Yvone',
-      avatar: 'https://img.ifcdn.com/images/d3951bf44788590b80f69c0c65718f7a23eb33c645cb677ee335f81a6e785ee6_3.jpg',
+      user_name: 'KevinBH',
+      avatar: 'http://communicasound.com/wp-content/uploads/2017/02/Twitter-Logo-PNG-1.png',
       description: newText
     };
 
@@ -85,6 +102,8 @@ class App extends Component {
           });
         }
       )
+
+    axios.post('https://still-garden-88285.herokuapp.com/draft_tweets')
   }
 
   render() {
