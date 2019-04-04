@@ -77,14 +77,14 @@ class App extends Component {
     let headers = {};
     headers['Content-Type'] = 'application/json';
 
-    const options = {
+ /*   const options = {
       headers: headers,
       method: 'POST',
       // credentials: 'include',
       body: JSON.stringify(newTweet)
     };
 
-    fetch("https://still-garden-88285.herokuapp.com/draft_tweets", options)
+     fetch("https://still-garden-88285.herokuapp.com/draft_tweets", options)
       .then(res => res.json())
       .then(
         (result) => {
@@ -101,9 +101,25 @@ class App extends Component {
             error
           });
         }
-      )
+      ) */
 
-    axios.post('https://still-garden-88285.herokuapp.com/draft_tweets')
+    axios.post('https://still-garden-88285.herokuapp.com/draft_tweets', {newTweet})
+    .then(
+      (result) => {
+        let newTweets = this.state.tweets.slice();
+
+        this.setState({
+          isLoaded: true,
+          tweets: newTweets.concat(result.data.draft_tweet)
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    )
   }
 
   render() {
