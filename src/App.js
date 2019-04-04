@@ -103,7 +103,7 @@ class App extends Component {
         }
       ) */
 
-    axios.post('https://still-garden-88285.herokuapp.com/draft_tweets', {newTweet})
+    axios.post('https://still-garden-88285.herokuapp.com/draft_tweets', newTweet)
     .then(
       (result) => {
         let newTweets = this.state.tweets.slice();
